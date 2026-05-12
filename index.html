@@ -101,8 +101,8 @@
     #rsvp-float:hover { background: var(--gold-dark); }
 
     /* ================= MAIN CONTENT ================= */
-    #content { opacity: 0; transition: opacity 1s ease; text-align: center; padding-top: 60px; width: 100%; visibility: hidden; }
-    #content.visible { opacity: 1; visibility: visible; }
+    #content { opacity: 0; transition: opacity 1s ease; text-align: center; padding-top: 60px; display: none; width: 100%; }
+    #content.visible { display: block; opacity: 1; }
 
     .reveal {
       opacity: 0;
@@ -300,28 +300,35 @@
       document.getElementById('hint').style.display = 'none';
 
       setTimeout(() => {
-        intro.classList.add('opened');
-        content.classList.add('visible');
+        // Show content in the layout first, then flush reflow before the fixed
+        // intro starts fading — prevents iOS Safari from repositioning fixed elements
+        content.style.display = 'block';
+        void content.offsetHeight;
 
-        intro.addEventListener('transitionend', () => {
-          intro.style.display = 'none';
-          document.body.style.overflowY = 'auto';
-        }, { once: true });
-        setTimeout(() => document.getElementById('rsvp-float').classList.add('visible'), 1200);
+        requestAnimationFrame(() => {
+          intro.classList.add('opened');
+          content.classList.add('visible');
 
-        const rsvpObserver = new IntersectionObserver((entries) => {
-          document.getElementById('rsvp-float').classList.toggle('visible', !entries[0].isIntersecting);
-        }, { threshold: 0.2 });
-        rsvpObserver.observe(document.getElementById('rsvp-section'));
+          intro.addEventListener('transitionend', () => {
+            intro.style.display = 'none';
+            document.body.style.overflowY = 'auto';
+          }, { once: true });
+          setTimeout(() => document.getElementById('rsvp-float').classList.add('visible'), 1200);
 
-        setTimeout(() => {
-            ['seq-hero', 'seq-pol1', 'seq-pol2', 'seq-story'].forEach((id, i) => {
-                const el = document.getElementById(id);
-                if (el && el.getBoundingClientRect().top < window.innerHeight) {
-                    setTimeout(() => el.classList.add('active'), i * 600);
-                }
-            });
-        }, 600);
+          const rsvpObserver = new IntersectionObserver((entries) => {
+            document.getElementById('rsvp-float').classList.toggle('visible', !entries[0].isIntersecting);
+          }, { threshold: 0.2 });
+          rsvpObserver.observe(document.getElementById('rsvp-section'));
+
+          setTimeout(() => {
+              ['seq-hero', 'seq-pol1', 'seq-pol2', 'seq-story'].forEach((id, i) => {
+                  const el = document.getElementById(id);
+                  if (el && el.getBoundingClientRect().top < window.innerHeight) {
+                      setTimeout(() => el.classList.add('active'), i * 600);
+                  }
+              });
+          }, 600);
+        });
       }, 1800);
     });
 
