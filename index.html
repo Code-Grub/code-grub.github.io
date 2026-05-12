@@ -132,7 +132,13 @@
     }
     .floral-bouquet { position: absolute; pointer-events: none; z-index: 1; filter: drop-shadow(1px 3px 5px rgba(0,0,0,0.1)); }
     .floral-bouquet img { width: 650px; height: auto; display: block; }
-    @media (max-width: 768px) { .floral-bouquet img { width: 240px; } }
+    .bouquet-left  { top: 50%; right: calc(50% + 100px); transform: translateY(-50%); }
+    .bouquet-right { top: 50%; left: calc(50% + 100px); transform: translateY(-50%) rotate(180deg); }
+    @media (max-width: 768px) {
+      .floral-bouquet img { width: 240px; }
+      .bouquet-left  { top: auto; right: auto; bottom: 0; left: 50%; transform: translateX(-50%); }
+      .bouquet-right { top: 0; left: 50%; transform: translateX(-50%) rotate(180deg); }
+    }
     .click-hint { position: absolute; bottom: -50px; left: 0; width: 100%; text-align: center; font-size: 0.7rem; letter-spacing: 3px; color: var(--sage); text-transform: uppercase; opacity: 0.6; animation: pulse 2s infinite ease-in-out; }
     @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
     .open .envelope-flap { transform: rotateX(180deg); }
@@ -195,12 +201,12 @@
   <div class="intro" id="intro">
 
     <!-- Left bouquet, peeking behind envelope -->
-    <div class="floral-bouquet" style="top:50%;right:calc(50% + 100px);transform:translateY(-50%);">
+    <div class="floral-bouquet bouquet-left">
       <img src="images/flower.png" alt="">
     </div>
 
     <!-- Right bouquet, peeking behind envelope -->
-    <div class="floral-bouquet" style="top:50%;left:calc(50% + 100px);transform:translateY(-50%) rotate(180deg);">
+    <div class="floral-bouquet bouquet-right">
       <img src="images/flower.png" alt="">
     </div>
 
