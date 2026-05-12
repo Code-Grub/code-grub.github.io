@@ -14,7 +14,7 @@
       --text: #2f2f2f;
       --gold: #d4af37;
       --gold-dark: #8b6d31;
-      --paper-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://w3.org id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
+      --paper-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://w3.org id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -32,7 +32,7 @@
     .paper-texture {
       position: relative;
       background-color: #ffffff !important;
-      box-shadow: inset 0 0 40px rgba(0,0,0,0.03), 2px 10px 25px rgba(0,0,0,0.08) !important;
+      background-image: url('https://transparenttextures.com');
     }
     .paper-texture::after {
       content: "";
@@ -41,7 +41,7 @@
       opacity: 0.4; mix-blend-mode: multiply;
     }
 
-    /* ================= 3D ENVELOPE ================= */
+    /* ================= 3D ENVELOPE STAGE ================= */
     .intro {
       position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
       background: radial-gradient(circle, #f7f5ef, #dce4dc); z-index: 2000; perspective: 2000px; 
@@ -55,22 +55,25 @@
       pointer-events: none; 
     }
 
-    /* MOBILE CORNER POSITION (Added Buffer) */
+    /* MOBILE ADJUSTMENTS */
     @media (max-width: 768px) {
       .intro.opened {
-        transform: scale(0.3) translate(-85%, -105%); /* Slightly smaller, shifted in from edges */
+        transform: scale(0.35) translate(-80%, -95%); /* Safe buffer from edges */
       }
       .envelope-wrapper {
-        width: 320px !important; /* Scale envelope wrapper for mobile width */
-        height: 226px !important;
+        width: 340px !important; 
+        height: 240px !important;
       }
       .hero-names { font-size: 3.5rem !important; }
-      .paper-scrap { padding: 40px 20px !important; width: 90% !important; }
-      .polaroid { width: 280px !important; margin: 20px !important; }
+      .recipient-name { font-size: 2rem !important; top: 12% !important; }
+      .wax-seal { width: 50px !important; height: 50px !important; bottom: 38% !important; }
+      .seal-inner-edge { width: 46px !important; height: 46px !important; }
+      .wax-seal span { font-size: 0.75rem !important; }
     }
 
     .envelope-wrapper { width: 440px; height: 310px; position: relative; transform-style: preserve-3d; cursor: pointer; transition: transform 0.1s linear; display: flex; align-items: center; justify-content: center; }
     .envelope-back { position: absolute; inset: 0; background: white; border-radius: 6px; transform: translateZ(0px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
+    
     .letter {
       position: absolute; bottom: 5%; left: 4%; width: 92%; height: 92%; border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; 
       transform: translateZ(2px); transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1); border-top: 1px solid rgba(255,255,255,0.8);
@@ -78,18 +81,31 @@
     .open .letter { transform: translateZ(5px) translateY(-140px); transition-delay: 0.6s; box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important; }
     .letter h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #1a1a1a; position: relative; z-index: 15; }
     .letter p { font-size: 0.7rem; letter-spacing: 3px; margin-top: 10px; color: var(--sage); font-weight: 500; position: relative; z-index: 15; }
+    
     .envelope-pocket { position: absolute; inset: 0; transform: translateZ(10px); pointer-events: none; }
     .envelope-pocket svg { width: 100%; height: 100%; filter: drop-shadow(0 -2px 4px rgba(0,0,0,0.05)); }
+    
     .envelope-flap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: top; transform-style: preserve-3d; transform: translateZ(15px); transition: transform 0.8s ease-in-out; }
     .flap-front svg { width: 100%; height: 100%; fill: var(--sage); }
-    .recipient-name { position: absolute; top: 35px; left: 50%; transform: translateX(-50%) translateZ(1px); font-family: 'Great Vibes', cursive !important; font-size: 2.2rem; color: rgba(255,255,255,0.95); white-space: nowrap; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); backface-visibility: hidden; }
-    .wax-seal {
-      position: absolute; bottom: 110px; left: 50%; transform: translateX(-50%) translateZ(5px); width: 60px; height: 60px; background: radial-gradient(circle at 35% 35%, #e6be4f, var(--gold) 50%, var(--gold-dark) 90%); border-radius: 50%; 
-      box-shadow: 0 6px 12px rgba(0,0,0,0.3), inset 3px 3px 5px rgba(255,255,255,0.5), inset -3px -3px 5px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; backface-visibility: hidden;
+
+    /* RELATIVE POSITIONING FOR TEXT */
+    .recipient-name { 
+      position: absolute; top: 12%; left: 50%; transform: translateX(-50%) translateZ(1px); 
+      font-family: 'Great Vibes', cursive !important; font-size: 2.6rem; color: rgba(255,255,255,0.95); 
+      white-space: nowrap; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); backface-visibility: hidden; 
     }
-    .wax-seal::before { content: ""; position: absolute; inset: -5px; background: var(--gold); border-radius: 48% 52% 45% 55% / 52% 48% 55% 45%; z-index: -1; box-shadow: inset 1px 1px 2px rgba(255,255,255,0.3), 0 3px 6px rgba(0,0,0,0.2); }
-    .seal-inner-edge { position: absolute; width: 56px; height: 56px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); border-bottom-color: rgba(0,0,0,0.3); border-right-color: rgba(0,0,0,0.3); z-index: 1; }
-    .wax-seal span { font-family: 'Great Vibes', cursive !important; font-weight: 400; font-size: 0.8rem; color: rgba(60, 48, 15, 0.9); z-index: 2; text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2), -1px -1px 1px rgba(0, 0, 0, 0.5); padding-top: 3px; }
+
+    /* RELATIVE POSITIONING FOR SEAL */
+    .wax-seal {
+      position: absolute; bottom: 35%; left: 50%; transform: translateX(-50%) translateZ(5px); 
+      width: 65px; height: 65px; background: radial-gradient(circle at 35% 35%, #e6be4f, var(--gold) 50%, var(--gold-dark) 90%); 
+      border-radius: 50%; box-shadow: 0 6px 12px rgba(0,0,0,0.3), inset 3px 3px 5px rgba(255,255,255,0.5), inset -3px -3px 5px rgba(0,0,0,0.4); 
+      display: flex; align-items: center; justify-content: center; backface-visibility: hidden;
+    }
+    .wax-seal::before { content: ""; position: absolute; inset: -8%; background: var(--gold); border-radius: 48% 52% 45% 55% / 52% 48% 55% 45%; z-index: -1; box-shadow: inset 1px 1px 2px rgba(255,255,255,0.3), 0 3px 6px rgba(0,0,0,0.2); }
+    .seal-inner-edge { position: absolute; width: 92%; height: 92%; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); border-bottom-color: rgba(0,0,0,0.3); border-right-color: rgba(0,0,0,0.3); z-index: 1; }
+    .wax-seal span { font-family: 'Great Vibes', cursive !important; font-weight: 400; font-size: 0.9rem; color: rgba(60, 48, 15, 0.9); z-index: 2; text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2), -1px -1px 1px rgba(0, 0, 0, 0.5); padding-top: 3px; }
+
     .click-hint { position: absolute; bottom: -50px; left: 0; width: 100%; text-align: center; font-size: 0.7rem; letter-spacing: 3px; color: var(--sage); text-transform: uppercase; opacity: 0.6; animation: pulse 2s infinite ease-in-out; }
     @keyframes pulse { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 0.7; transform: translateY(5px); } }
     .open .envelope-flap { transform: rotateX(180deg); }
@@ -127,7 +143,7 @@
     <div class="envelope-wrapper" id="wrapper">
       <div class="envelope-back paper-texture"></div>
       <div class="letter paper-texture">
-        <h2>Matt & Emily</h2>
+        <h2 style="font-family: 'Cormorant Garamond';">Matt & Emily</h2>
         <p>05.11.2026</p>
       </div>
       <div class="envelope-pocket">
@@ -152,11 +168,11 @@
 
     <section style="display: flex; justify-content: center; flex-wrap: wrap;">
       <div class="polaroid reveal" id="seq-2" style="--rot: 6deg;">
-        <img src="https://unsplash.com" alt="Engagement">
+        <img src="https://unsplash.com" alt="Wedding">
         <span>The beginning...</span>
       </div>
       <div class="polaroid reveal" id="seq-3" style="--rot: -5deg; margin-top: 60px;">
-        <img src="https://unsplash.com" alt="Proposal">
+        <img src="https://unsplash.com" alt="Wedding">
         <span>She said yes!</span>
       </div>
     </section>
