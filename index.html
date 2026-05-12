@@ -278,12 +278,9 @@
     const content = document.getElementById('content');
     let isOpen = false;
 
-    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    function handleTilt(x, y) { if (!isOpen && !isTouchDevice) wrapper.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`; }
+    function handleTilt(x, y) { if (!isOpen) wrapper.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`; }
     document.addEventListener('mousemove', (e) => { handleTilt((e.clientX / window.innerWidth - 0.5) * 20, (e.clientY / window.innerHeight - 0.5) * -20); });
-    if (!isTouchDevice) {
-      window.addEventListener('deviceorientation', (e) => { if (!isOpen) handleTilt(Math.min(Math.max(e.gamma, -20), 20), Math.min(Math.max(e.beta - 45, -20), 20)); }, true);
-    }
+    window.addEventListener('deviceorientation', (e) => { if (!isOpen) handleTilt(Math.min(Math.max(e.gamma, -20), 20), Math.min(Math.max(e.beta - 45, -20), 20)); }, true);
 
     // RESTORED: Unified Scroll Observer
     const observer = new IntersectionObserver((entries) => {
@@ -300,15 +297,16 @@
       wrapper.classList.add('open');
       wrapper.style.transition = 'none';
       wrapper.style.transform = 'none';
-      intro.style.perspective = 'none';
       document.getElementById('hint').style.display = 'none';
 
       setTimeout(() => {
         intro.classList.add('opened');
         content.classList.add('visible');
-        document.body.style.overflowY = 'auto';
 
-        intro.addEventListener('transitionend', () => { intro.style.display = 'none'; }, { once: true });
+        intro.addEventListener('transitionend', () => {
+          intro.style.display = 'none';
+          document.body.style.overflowY = 'auto';
+        }, { once: true });
         setTimeout(() => document.getElementById('rsvp-float').classList.add('visible'), 1200);
 
         const rsvpObserver = new IntersectionObserver((entries) => {
