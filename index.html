@@ -87,6 +87,19 @@
     @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
     .open .envelope-flap { transform: rotateX(180deg); }
 
+    /* ================= FLOATING RSVP BUTTON ================= */
+    #rsvp-float {
+      position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+      background: var(--sage); color: white; padding: 14px 28px;
+      border-radius: 2px; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+      cursor: pointer; border: none; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease, background 0.2s ease;
+      pointer-events: none;
+    }
+    #rsvp-float.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    #rsvp-float:hover { background: var(--gold-dark); }
+
     /* ================= MAIN CONTENT ================= */
     #content { opacity: 0; transition: opacity 1s ease; text-align: center; padding-top: 60px; display: none; width: 100%; }
     #content.visible { display: block; opacity: 1; }
@@ -148,6 +161,8 @@
     </div>
   </div>
 
+  <button id="rsvp-float" onclick="document.getElementById('rsvp-section').scrollIntoView({behavior:'smooth'})">RSVP</button>
+
   <div id="content">
     <section class="hero reveal" id="seq-hero"><h1 class="hero-names">Emily & Matt</h1><p class="hero-date">SEPTEMBER 19, 2026 • NEWCASTLE, ON</p></section>
     <section style="display: flex; justify-content: center; flex-wrap: wrap;">
@@ -167,6 +182,18 @@
       <p><strong>Reception</strong></p>
       <p>Newcastle Village Community Hall</p>
       <p>King Avenue West, Newcastle, ON</p>
+    </div>
+    <div class="paper-scrap paper-texture reveal" style="--rot: 1deg; max-width: 600px;">
+      <h2 class="section-title">Dress Code</h2>
+      <p style="letter-spacing: 4px; text-transform: uppercase; font-size: 0.75rem; color: var(--sage); margin: 12px 0 20px;">Formal</p>
+      <p style="margin-bottom: 16px;">We encourage you to dress up and have fun!</p>
+      <p style="margin-bottom: 24px;">We kindly ask that you avoid wearing white, cream, or green. Thank you!</p>
+      <p style="letter-spacing: 3px; text-transform: uppercase; font-size: 0.7rem; color: var(--sage); margin-bottom: 14px;">Ideas & Advice</p>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <a href="https://www.theknot.com/content/formal-wedding-attire" target="_blank" class="btn" style="font-size: 0.65rem; padding: 10px 20px;">Formal Wedding Attire</a>
+        <a href="https://www.theknot.com/content/formal-wedding-guest-dresses" target="_blank" class="btn" style="font-size: 0.65rem; padding: 10px 20px;">Formal Wedding Guest Dresses</a>
+        <a href="https://www.theknot.com/content/tuxedo-vs-suit" target="_blank" class="btn" style="font-size: 0.65rem; padding: 10px 20px;">Tuxedo vs. Suit</a>
+      </div>
     </div>
     <div class="paper-scrap paper-texture reveal" style="--rot: 1.5deg; max-width: 750px;">
       <h2 class="section-title">Wedding Party</h2>
@@ -193,7 +220,56 @@
         </div>
       </div>
     </div>
-    <div class="paper-scrap paper-texture reveal" style="--rot: -1deg;"><h2 class="section-title">RSVP</h2><p>Please let us know if you can join us by August 19, 2026.</p><div id="countdown"></div><a href="https://www.theknot.com/us/emily-bryen-and-matt-chesson-sep-2026/rsvp" target="_blank" class="btn">Confirm Attendance</a></div>
+    <div class="paper-scrap paper-texture reveal" style="--rot: -1.5deg; max-width: 800px;">
+      <h2 class="section-title">Travel & Stay</h2>
+      <div style="display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px; justify-content: center; text-align: left;">
+
+        <div style="flex: 1; min-width: 260px; border: 1px solid rgba(138,154,138,0.3); border-radius: 4px; padding: 24px;">
+          <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 4px;">Comfort Inn & Suites</p>
+          <p style="font-size: 0.75rem; opacity: 0.6; margin-bottom: 12px;">9-minute drive · Off Hwy 401, Bowmanville</p>
+          <p style="font-size: 0.85rem; margin-bottom: 4px;">5 Spicer Square, Bowmanville, ON L1C 5M2</p>
+          <p style="font-size: 0.85rem; margin-bottom: 12px;">(905) 623-6781</p>
+          <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>Check-In:</strong> Sat, September 19, 2026</p>
+          <p style="font-size: 0.85rem; margin-bottom: 12px;"><strong>Check-Out:</strong> Sun, September 20, 2026</p>
+          <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>Rate:</strong> $255/night</p>
+          <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>Group Name:</strong> Chesson</p>
+          <p style="font-size: 0.85rem; margin-bottom: 16px;"><strong>Booking Code:</strong> HV17M8</p>
+          <p style="font-size: 0.75rem; color: var(--sage); margin-bottom: 16px;">Spaces limited — book by August 19, 2026</p>
+          <a href="https://www.choicehotels.com/ontario/bowmanville/comfort-inn-hotels/cna97?mc=llrscncn&pmf=canada&wwpath=www.theknot.com%2Fus%2Femily-bryen-and-matt-chesson-sep-2026" target="_blank" class="btn" style="font-size: 0.7rem; padding: 10px 24px;">Book Now</a>
+        </div>
+
+        <div style="flex: 1; min-width: 260px; border: 1px solid rgba(138,154,138,0.3); border-radius: 4px; padding: 24px;">
+          <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 4px;">Courtyard by Marriott Oshawa</p>
+          <p style="font-size: 0.75rem; opacity: 0.6; margin-bottom: 12px;">16-minute drive · Off Hwy 401, Oshawa</p>
+          <p style="font-size: 0.85rem; margin-bottom: 4px;">1011 Bloor St E, Oshawa, ON L1H 0C7</p>
+          <p style="font-size: 0.85rem; margin-bottom: 12px;">(905) 576-5101</p>
+          <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>Check-In:</strong> Sat, September 19, 2026</p>
+          <p style="font-size: 0.85rem; margin-bottom: 12px;"><strong>Check-Out:</strong> Sun, September 20, 2026</p>
+          <p style="font-size: 0.85rem; margin-bottom: 16px;"><strong>Rate:</strong> $189/night</p>
+          <p style="font-size: 0.75rem; color: var(--sage); margin-bottom: 16px;">Spaces limited — book by August 19, 2026 using the link below</p>
+          <a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1773069144682&key=GRP&app=resvlink&_branch_match_id=1430678180444744716&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi3OyczLtgdK2ALZZSCOWmaKraG5ubGBmaWhiYmZhZFadmqlrXtQgFpdUWpaKlB3Xnp8UlF%2BeXFqka1zRlF%2BbioAQRZM32AAAAA%3D&wwpath=www.theknot.com%2Fus%2Femily-bryen-and-matt-chesson-sep-2026" target="_blank" class="btn" style="font-size: 0.7rem; padding: 10px 24px;">Book Now</a>
+        </div>
+
+      </div>
+      <div style="margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(138,154,138,0.2); text-align: left;">
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--sage); margin-bottom: 8px;">Where should I stay?</p>
+        <p>We encourage you to use our local hotels where we have reserved blocks. If you wish, feel free to find alternative hotels or Airbnbs that work for you and your budget. We look forward to seeing you! If you have any questions or concerns, please contact Matt or Emily for local recommendations.</p>
+      </div>
+    </div>
+    <div class="paper-scrap paper-texture reveal" style="--rot: 1deg; max-width: 700px;">
+      <h2 class="section-title">Q & A</h2>
+      <div style="text-align: left; margin-top: 10px;">
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--sage); margin-bottom: 8px;">Where is the venue?</p>
+        <p style="margin-bottom: 30px;">We are getting married at the beautiful historic Newcastle Community Hall at 20 King Street West, Newcastle, Ontario, Canada. The ceremony will take place at the gazebo located next to the main hall.</p>
+
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--sage); margin-bottom: 8px;">Is there parking at the venue?</p>
+        <p style="margin-bottom: 30px;">Yes — there is limited onsite parking. Due to the limited nature of the parking, we are hoping to ensure our senior family members are able to park there. If you have any questions, do not hesitate to contact the bride or groom! There is additional parking on the street and local public parking nearby.</p>
+
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--sage); margin-bottom: 8px;">Is there a registry?</p>
+        <p>No, we do not have a registry. We kindly ask for cash gifts only to help us in the future.</p>
+      </div>
+    </div>
+    <div id="rsvp-section" class="paper-scrap paper-texture reveal" style="--rot: -1deg;"><h2 class="section-title">RSVP</h2><p>Please let us know if you can join us by August 19, 2026.</p><div id="countdown"></div><a href="https://www.theknot.com/us/emily-bryen-and-matt-chesson-sep-2026/rsvp" target="_blank" class="btn">Confirm Attendance</a></div>
   </div>
 
   <script>
@@ -228,6 +304,12 @@
         document.body.style.overflowY = 'auto';
 
         intro.addEventListener('transitionend', () => { intro.style.display = 'none'; }, { once: true });
+        setTimeout(() => document.getElementById('rsvp-float').classList.add('visible'), 1200);
+
+        const rsvpObserver = new IntersectionObserver((entries) => {
+          document.getElementById('rsvp-float').classList.toggle('visible', !entries[0].isIntersecting);
+        }, { threshold: 0.2 });
+        rsvpObserver.observe(document.getElementById('rsvp-section'));
 
         setTimeout(() => {
             ['seq-hero', 'seq-pol1', 'seq-pol2', 'seq-story'].forEach((id, i) => {
