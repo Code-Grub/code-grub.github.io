@@ -53,6 +53,7 @@
       position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
       background: radial-gradient(circle, #f7f5ef, #dce4dc); z-index: 2000; perspective: 1500px;
       transition: opacity 1s ease 0.3s, background 1s ease;
+      will-change: opacity; transform: translateZ(0);
     }
     .intro.opened { opacity: 0; background: transparent; pointer-events: none; }
 
@@ -101,7 +102,7 @@
     #rsvp-float:hover { background: var(--gold-dark); }
 
     /* ================= MAIN CONTENT ================= */
-    #content { opacity: 0; transition: opacity 1s ease; text-align: center; padding-top: 60px; display: none; width: 100%; }
+    #content { opacity: 0; transition: opacity 1s ease; text-align: center; padding-top: 60px; display: none; width: 100%; overflow-x: hidden; }
     #content.visible { display: block; opacity: 1; }
 
     .reveal {
