@@ -52,7 +52,7 @@
     .intro {
       position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
       background: radial-gradient(circle, #f7f5ef, #dce4dc); z-index: 2000; 
-      perspective: 2000px; /* Essential for 3D depth */
+      perspective: 2500px; /* Increased for better 3D clearance */
       transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 1s ease;
     }
 
@@ -67,36 +67,59 @@
     .envelope-wrapper { 
       width: var(--env-width); height: 310px; 
       position: relative; 
-      transform-style: preserve-3d; /* Allows child elements to exist in 3D space */
+      transform-style: preserve-3d;
       cursor: pointer; 
       transition: transform 0.1s linear; 
       display: flex; align-items: center; justify-content: center; 
     }
 
+    /* 1. BACK (Z: 0) */
     .envelope-back { 
         position: absolute; inset: 0; border-radius: 6px; 
         transform: translateZ(0px); 
         box-shadow: 0 30px 60px rgba(0,0,0,0.15); 
     }
     
+    /* 2. THE CARD (Z: 1) - Tucked Deep */
     .letter {
       position: absolute; bottom: 5%; left: 4%; width: 92%; height: 92%; border-radius: 4px; 
       display: flex; flex-direction: column; align-items: center; justify-content: center; 
-      transform: translateZ(2px); /* Tucked behind pocket */
-      transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1); 
+      transform: translateZ(1px); 
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
       border-top: 1px solid rgba(255,255,255,0.8);
+      z-index: 2;
     }
 
-    .open .letter { transform: translateZ(20px) translateY(-140px); transition-delay: 0.6s; box-shadow: 0 15px 45px rgba(0,0,0,0.2) !important; }
+    /* FIX: Pop forward only after sliding up enough */
+    .open .letter { 
+      transform: translateZ(30px) translateY(-145px); 
+      transition-delay: 0.7s; 
+      box-shadow: 0 15px 45px rgba(0,0,0,0.2) !important; 
+    }
     
-    .envelope-pocket { position: absolute; inset: 0; transform: translateZ(10px); pointer-events: none; }
-    .envelope-pocket svg { width: 100%; height: 100%; filter: drop-shadow(0 -2px 4px rgba(0,0,0,0.1)); }
+    .letter h2, .letter p { position: relative; z-index: 5; }
+    .letter h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #1a1a1a; }
+    .letter p { font-size: 0.7rem; letter-spacing: 3px; margin-top: 10px; color: var(--sage); font-weight: 500; }
+
+    /* 3. POCKET (Z: 10) - Corrected SVG to prevent clipping */
+    .envelope-pocket { 
+      position: absolute; inset: 0; 
+      transform: translateZ(10px); 
+      pointer-events: none; 
+      z-index: 10;
+    }
+    .envelope-pocket svg { 
+      width: 100%; height: 100%; 
+      filter: drop-shadow(0 -2px 4px rgba(0,0,0,0.1)); 
+    }
     
+    /* 4. FLAP (Z: 11) - Highest */
     .envelope-flap { 
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
         transform-origin: top; transform-style: preserve-3d; 
-        transform: translateZ(11px); /* Sits just above the pocket */
-        transition: transform 0.8s ease-in-out; 
+        transform: translateZ(11px); 
+        transition: transform 0.9s ease-in-out; 
+        z-index: 15;
     }
     .open .envelope-flap { transform: translateZ(11px) rotateX(180deg); }
 
@@ -150,13 +173,23 @@
   <div class="intro" id="intro">
     <div class="envelope-wrapper" id="wrapper">
       <div class="envelope-back paper-texture"></div>
+      
+      <!-- Card (Z: 1) -->
       <div class="letter paper-texture">
         <h2 style="font-family: 'Cormorant Garamond';">Matt & Emily</h2>
         <p>05.11.2026</p>
       </div>
+      
+      <!-- Pocket (Z: 10) -->
       <div class="envelope-pocket">
-        <svg viewBox="0 0 440 310" preserveAspectRatio="none"><path d="M0,0 L220,155 L0,310 Z" fill="#f2f2f2"/><path d="M440,0 L220,155 L440,310 Z" fill="#f2f2f2"/><path d="M0,310 L220,155 L440,310 Z" fill="white"/></svg>
+        <svg viewBox="0 0 440 310" preserveAspectRatio="none">
+           <path d="M0,0 L220,155 L0,310 Z" fill="#f2f2f2"/>
+           <path d="M440,0 L220,155 L440,310 Z" fill="#f2f2f2"/>
+           <path d="M0,310 L220,155 L440,310 Z" fill="white"/>
+        </svg>
       </div>
+
+      <!-- Flap (Z: 11) -->
       <div class="envelope-flap">
         <div class="flap-front">
           <svg viewBox="0 0 440 310" preserveAspectRatio="none"><path d="M0,0 L220,185 L440,0 Z" /></svg>
@@ -185,25 +218,23 @@
     const content = document.getElementById('content');
     let isOpen = false;
 
-    // DESKTOP: Mouse Tilt Logic
+    // Fixed Tilt Logic
     document.addEventListener('mousemove', (e) => {
       if (isOpen) return;
-      const x = (e.clientX / window.innerWidth - 0.5) * 25;
-      const y = (e.clientY / window.innerHeight - 0.5) * -25;
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * -20;
       wrapper.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
     });
 
-    // MOBILE: Device Orientation (Tilt) Logic
     if (window.DeviceOrientationEvent) {
       window.addEventListener('deviceorientation', (e) => {
         if (isOpen) return;
-        const tiltX = Math.min(Math.max(e.beta, -30), 30) / 2; 
-        const tiltY = Math.min(Math.max(e.gamma, -30), 30) / 2;
+        const tiltX = Math.min(Math.max(e.beta - 45, -20), 20); 
+        const tiltY = Math.min(Math.max(e.gamma, -20), 20);
         wrapper.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
       }, true);
     }
 
-    // Scroll Logic
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => { if (entry.isIntersecting && isOpen) entry.target.classList.add('active'); });
     }, { threshold: 0.1 });
@@ -224,12 +255,12 @@
       }, 2500);
     });
 
-    // RSVP Countdown
     const rsvpDate = new Date("April 1, 2026 23:59:59").getTime();
     setInterval(() => {
       const diff = rsvpDate - new Date().getTime();
       const d = Math.floor(diff / 86400000), h = Math.floor((diff % 86400000) / 3600000), m = Math.floor((diff % 3600000) / 60000);
-      document.getElementById("countdown").innerHTML = `<div>${d}<span> Days</span></div><div>${h}<span> Hrs</span></div><div>${m}<span> Mins</span></div>`;
+      const c = document.getElementById("countdown");
+      if(c) c.innerHTML = `<div>${d}<span> Days</span></div><div>${h}<span> Hrs</span></div><div>${m}<span> Mins</span></div>`;
     }, 1000);
   </script>
 </body>
