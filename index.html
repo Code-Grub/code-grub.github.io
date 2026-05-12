@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Matt & Emily | Wedding</title>
+  <title>Emily & Matt | Wedding</title>
 
   <style>
-    @import url('https://googleapis.com');
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;600&display=swap');
 
     :root {
       --sage: #8a9a8a;
@@ -51,14 +51,13 @@
     /* ================= 3D ENVELOPE STAGE ================= */
     .intro {
       position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background: radial-gradient(circle, #f7f5ef, #dce4dc); z-index: 2000; perspective: 1500px; 
-      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 1s ease;
+      background: radial-gradient(circle, #f7f5ef, #dce4dc); z-index: 2000; perspective: 1500px;
+      transition: opacity 1s ease 0.3s, transform 1s ease 0.3s, background 1s ease;
     }
-    .intro.opened { transform: scale(0.45) translate(-75%, -70%); background: transparent; pointer-events: none; }
+    .intro.opened { opacity: 0; transform: scale(1.1); background: transparent; pointer-events: none; }
 
     @media (max-width: 768px) {
       :root { --env-width: 320px; }
-      .intro.opened { transform: scale(0.35) translate(-80%, -95%); }
       .envelope-wrapper { width: var(--env-width) !important; height: 226px !important; }
     }
 
@@ -89,7 +88,7 @@
     .open .envelope-flap { transform: rotateX(180deg); }
 
     /* ================= MAIN CONTENT ================= */
-    #content { opacity: 0; transition: 1s ease; text-align: center; padding-top: 150px; display: none; width: 100%; }
+    #content { opacity: 0; transition: opacity 1s ease; text-align: center; padding-top: 60px; display: none; width: 100%; }
     #content.visible { display: block; opacity: 1; }
 
     .reveal {
@@ -132,8 +131,8 @@
     <div class="envelope-wrapper" id="wrapper">
       <div class="envelope-back paper-texture"></div>
       <div class="letter paper-texture">
-        <h2 style="font-family: 'Cormorant Garamond';">Matt & Emily</h2>
-        <p>05.11.2026</p>
+        <h2 style="font-family: 'Cormorant Garamond';">Emily & Matt</h2>
+        <p>09.19.2026</p>
       </div>
       <div class="envelope-pocket">
         <svg viewBox="0 0 440 310" preserveAspectRatio="none"><path d="M0,0 L220,155 L0,310 Z" fill="#f2f2f2"/><path d="M440,0 L220,155 L440,310 Z" fill="#f2f2f2"/><path d="M0,310 L220,155 L440,310 Z" fill="white"/></svg>
@@ -142,7 +141,7 @@
         <div class="flap-front">
           <svg viewBox="0 0 440 310" preserveAspectRatio="none"><path d="M0,0 L220,185 L440,0 Z" /></svg>
           <div class="recipient-name">You're Invited</div>
-          <div class="wax-seal"><div class="seal-inner-edge"></div><span>M&E</span></div>
+          <div class="wax-seal"><div class="seal-inner-edge"></div><span>E&M</span></div>
         </div>
       </div>
       <div class="click-hint" id="hint">Click to Open</div>
@@ -150,14 +149,51 @@
   </div>
 
   <div id="content">
-    <section class="hero reveal" id="seq-hero"><h1 class="hero-names">Matt & Emily</h1><p class="hero-date">MAY 11, 2026 • TORONTO, ON</p></section>
+    <section class="hero reveal" id="seq-hero"><h1 class="hero-names">Emily & Matt</h1><p class="hero-date">SEPTEMBER 19, 2026 • NEWCASTLE, ON</p></section>
     <section style="display: flex; justify-content: center; flex-wrap: wrap;">
       <div class="polaroid reveal" id="seq-pol1" style="--rot: 6deg;"><img src="images/photo1.jpg"><span>The beginning...</span></div>
       <div class="polaroid reveal" id="seq-pol2" style="--rot: -5deg; margin-top: 60px;"><img src="images/photo2.jpg"><span>She said yes!</span></div>
     </section>
     <div class="paper-scrap scrap-1 paper-texture reveal" id="seq-story"><h2 class="section-title">Our Story</h2><p>Seven years later, we are ready to say "I do." We can't wait to share this new chapter of our lives with the people we love most.</p></div>
-    <div class="paper-scrap paper-texture reveal" style="--rot: 2deg;"><h2 class="section-title">The Details</h2><p><strong>Ceremony:</strong> 4:00 PM at St. Lawrence Hall</p><p><strong>Reception:</strong> 6:00 PM at The Distillery District</p></div>
-    <div class="paper-scrap paper-texture reveal" style="--rot: -1deg;"><h2 class="section-title">RSVP</h2><p>Please let us know if you can join us by April 1st.</p><div id="countdown"></div><a href="#" class="btn">Confirm Attendance</a></div>
+    <div class="paper-scrap paper-texture reveal" style="--rot: 2deg;">
+      <h2 class="section-title">The Details</h2>
+      <p><strong>Saturday, September 19, 2026</strong></p>
+      <p style="margin-top: 8px;">4:00 p.m. – 1:00 a.m. &nbsp;·&nbsp; Attire: Formal</p>
+      <p style="margin-top: 8px;">20 King Street West, Newcastle, Ontario, Canada</p>
+      <br>
+      <p><strong>Ceremony — 4:00 p.m.</strong></p>
+      <p>At the gazebo located on the property</p>
+      <br>
+      <p><strong>Reception</strong></p>
+      <p>Newcastle Village Community Hall</p>
+      <p>King Avenue West, Newcastle, ON</p>
+    </div>
+    <div class="paper-scrap paper-texture reveal" style="--rot: 1.5deg; max-width: 750px;">
+      <h2 class="section-title">Wedding Party</h2>
+      <div style="display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; margin-top: 10px;">
+        <div>
+          <p style="letter-spacing: 3px; text-transform: uppercase; font-size: 0.7rem; color: var(--sage); margin-bottom: 16px;">Bride's Side</p>
+          <p><strong>Kate Coulson-Dyer</strong></p>
+          <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 12px;">Maid of Honour</p>
+          <p><strong>Jen Mayes</strong></p>
+          <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 12px;">Bridesmaid</p>
+          <p><strong>Paige Metzger</strong></p>
+          <p style="font-size: 0.8rem; opacity: 0.6;">Bridesmaid</p>
+        </div>
+        <div>
+          <p style="letter-spacing: 3px; text-transform: uppercase; font-size: 0.7rem; color: var(--sage); margin-bottom: 16px;">Groom's Side</p>
+          <p><strong>Nick Lau</strong></p>
+          <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 12px;">Best Man</p>
+          <p><strong>Garrison Thomas</strong></p>
+          <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 12px;">Groomsman</p>
+          <p><strong>Corey Helliwell</strong></p>
+          <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 12px;">Groomsman</p>
+          <p><strong>Tyler Hendry</strong></p>
+          <p style="font-size: 0.8rem; opacity: 0.6;">Groomsman</p>
+        </div>
+      </div>
+    </div>
+    <div class="paper-scrap paper-texture reveal" style="--rot: -1deg;"><h2 class="section-title">RSVP</h2><p>Please let us know if you can join us by August 19, 2026.</p><div id="countdown"></div><a href="https://www.theknot.com/us/emily-bryen-and-matt-chesson-sep-2026/rsvp" target="_blank" class="btn">Confirm Attendance</a></div>
   </div>
 
   <script>
@@ -191,7 +227,8 @@
         content.classList.add('visible');
         document.body.style.overflowY = 'auto';
 
-        // Trigger visible top items first
+        intro.addEventListener('transitionend', () => { intro.style.display = 'none'; }, { once: true });
+
         setTimeout(() => {
             ['seq-hero', 'seq-pol1', 'seq-pol2', 'seq-story'].forEach((id, i) => {
                 const el = document.getElementById(id);
@@ -199,11 +236,11 @@
                     setTimeout(() => el.classList.add('active'), i * 600);
                 }
             });
-        }, 800);
-      }, 2500);
+        }, 600);
+      }, 1800);
     });
 
-    const rsvpDate = new Date("April 1, 2026 23:59:59").getTime();
+    const rsvpDate = new Date("August 19, 2026 23:59:59").getTime();
     setInterval(() => {
       const diff = rsvpDate - new Date().getTime();
       const d = Math.floor(diff / 86400000), h = Math.floor((diff % 86400000) / 3600000), m = Math.floor((diff % 3600000) / 60000);
