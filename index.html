@@ -278,9 +278,12 @@
     const content = document.getElementById('content');
     let isOpen = false;
 
-    function handleTilt(x, y) { if (!isOpen) wrapper.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`; }
+    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    function handleTilt(x, y) { if (!isOpen && !isTouchDevice) wrapper.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`; }
     document.addEventListener('mousemove', (e) => { handleTilt((e.clientX / window.innerWidth - 0.5) * 20, (e.clientY / window.innerHeight - 0.5) * -20); });
-    window.addEventListener('deviceorientation', (e) => { if (!isOpen) handleTilt(Math.min(Math.max(e.gamma, -20), 20), Math.min(Math.max(e.beta - 45, -20), 20)); }, true);
+    if (!isTouchDevice) {
+      window.addEventListener('deviceorientation', (e) => { if (!isOpen) handleTilt(Math.min(Math.max(e.gamma, -20), 20), Math.min(Math.max(e.beta - 45, -20), 20)); }, true);
+    }
 
     // RESTORED: Unified Scroll Observer
     const observer = new IntersectionObserver((entries) => {
