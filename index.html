@@ -295,7 +295,9 @@
       if (isOpen) return;
       isOpen = true;
       wrapper.classList.add('open');
-      wrapper.style.transform = `rotateX(0) rotateY(0)`;
+      wrapper.style.transition = 'none';
+      wrapper.style.transform = 'none';
+      intro.style.perspective = 'none';
       document.getElementById('hint').style.display = 'none';
 
       setTimeout(() => {
