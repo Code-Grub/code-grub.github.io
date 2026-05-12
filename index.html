@@ -79,8 +79,19 @@
     .open .letter { transform: translateZ(1px) translateY(-100px); transition-delay: 0.6s; }
     .envelope-pocket { position: absolute; inset: 0; transform: translateZ(2px); pointer-events: none; }
     .envelope-pocket svg { width: 100%; height: 100%; filter: drop-shadow(0 -2px 4px rgba(0,0,0,0.05)); }
+    .envelope-pocket::after {
+      content: ""; position: absolute; inset: 0;
+      background-image: url('images/paper.jpg'); background-size: cover;
+      opacity: 0.4; mix-blend-mode: multiply; pointer-events: none;
+    }
     .envelope-flap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: top; transform-style: preserve-3d; transform: translateZ(3px); transition: 0.8s; }
+    .flap-front { position: relative; width: 100%; height: 100%; }
     .flap-front svg { width: 100%; height: 100%; }
+    .flap-front::after {
+      content: ""; position: absolute; inset: 0;
+      background-image: url('images/paper.jpg'); background-size: cover;
+      opacity: 0.25; mix-blend-mode: multiply; pointer-events: none;
+    }
     .recipient-name { position: absolute; top: 12%; left: 50%; transform: translateX(-50%) translateZ(1px); font-family: 'Great Vibes', cursive !important; font-size: calc(var(--env-width) * 0.085); color: white; white-space: nowrap; backface-visibility: hidden; }
     .wax-seal {
       position: absolute; bottom: 35%; left: 50%; transform: translateX(-50%) translateZ(5px);
